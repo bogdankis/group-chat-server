@@ -26,15 +26,15 @@ public class ProfileRepoImpl implements ProfileRepo {
                 fisier.createNewFile();
                 System.out.println("Fisier creat");
                 ObjectInputStream profiles = new ObjectInputStream(new FileInputStream(fisier));
-                for (int i = 0; i < profiles.available()){
+                for (int i = 0; i < profiles.available();i++){
                     profiles.read();
                     profiles.close();
 
 
                 }
             } catch (IOException e) {
-                return null;
                 System.out.println("Fisierul este gol");
+                return null;
             }
         }
         if(!getProfile().getOnline()){

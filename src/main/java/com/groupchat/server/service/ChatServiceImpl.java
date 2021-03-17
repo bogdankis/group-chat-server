@@ -31,10 +31,12 @@ public class ChatServiceImpl implements ChatService {
         //TODO Anunta connectionScheduler de event.
         //TODO Adauga obiectului createMessageRequest senderId-ul (id-ul profilului tau)
         //TODO trimite request la server-ul parinte cu mesajul.
+        return null;
     }
 
     public List<MessageResponse> getMessages() {
         //TODO Anunta connectionScheduler de event.
         //TODO Ia mesajele de la server-ul parinte
+        return null;
     }
 }

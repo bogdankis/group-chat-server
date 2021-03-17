@@ -24,16 +24,19 @@ public class ProfileServiceImpl implements ProfileService {
         //TODO Anunta connectionScheduler de event.
         //TODO Creaza un profil in serverul parinte
         //TODO Salveaza profilul primit in fisierul tau
+        return null;
     }
 
     public List<Profile> getProfiles() {
         //TODO Anunta connectionScheduler de event.
         //TODO Ia toate profilele din serverul parinte.
+        return null;
     }
 
     public Profile getProfile() {
         //TODO Anunta connectionScheduler de event.
         //TODO Ia-ti profilul din fisier.
+        return null;
 
     }
 

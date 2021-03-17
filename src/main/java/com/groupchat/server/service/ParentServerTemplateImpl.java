@@ -23,18 +23,21 @@ public class ParentServerTemplateImpl implements ParentServerTemplate {
     public List<Profile> getProfiles() {
         restTemplate.getForObject("/api/profile", String.class);
         //TODO Cheama endpoint-ul din serverul parinte pentru a luat toate profilele.
+        return null;
     }
 
     @Override
     public Profile createProfile(CreateProfileRequest createProfileRequest) {
         restTemplate.getForObject("/api/profile", String.class);
         //TODO Cheama endpoint-ul din serverul parinte pentru a crea profilul.
+        return null;
     }
 
     @Override
     public void connect(String id) {
         //TODO Cheama endpoint-ul din serverul parinte pentru a te conecta.
         restTemplate.getForObject("/api/connection/connect/{id}", String.class);
+
 
     }
 
@@ -49,11 +52,13 @@ public class ParentServerTemplateImpl implements ParentServerTemplate {
     public List<MessageResponse> getMessages() {
         restTemplate.getForObject("/api/chat/", String.class);
         //TODO Cheama endpoint-ul din serverul parinte pentru a lua toate mesajele.
+        return null;
     }
 
     @Override
     public List<MessageResponse> sendMessage(CreateMessageRequest createMessageRequest) {
         restTemplate.getForObject("/api/chat/", String.class);
         //TODO Cheama endpoint-ul din serverul parinte pentru a lua crea un mesaj.
+        return null;
     }
 }

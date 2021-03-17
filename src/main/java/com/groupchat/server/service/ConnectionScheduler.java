@@ -25,9 +25,9 @@ public class ConnectionScheduler {
     @Scheduled(fixedRate = 300000) //5min = 300000ms
     public void checkForOffline() {
         profileRepo.getProfile();
-        if(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(5)){
-
-        }
+//   //     if(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(5)){
+//
+//        }
 
         /*
          TODO Ia profilul.
