@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.ServerSocket;
+import java.util.UUID;
 
 @Repository
 public class ProfileRepoImpl implements ProfileRepo {
@@ -21,38 +22,55 @@ public class ProfileRepoImpl implements ProfileRepo {
 
         File fisier = new File("profile.txt");
 
-        if (fisier.exists()) {
+        if (!fisier.exists()) {
             try {
                 fisier.createNewFile();
-                System.out.println("Fisier creat");
-                ObjectInputStream profiles = new ObjectInputStream(new FileInputStream(fisier));
-                for (int i = 0; i < profiles.available();i++){
-                    profiles.read();
-                    profiles.close();
-
-
-                }
             } catch (IOException e) {
-                System.out.println("Fisierul este gol");
+                System.out.println("Fisier necreat");
                 return null;
             }
         }
-        if(!getProfile().getOnline()){
+        FileInputStream fileInputStream = null;
+        ObjectInputStream objectInputStream = null;
+
+        try {
+            System.out.println("Fisier creat");
+            fileInputStream = new FileInputStream(fisier);
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            Profile profile = (Profile) objectInputStream.readObject();
+            if (!profile.getOnline()) {
+                parentServerTemplate.connect(profile.getId());
+                profile.setOnline(true);
+                saveProfile(profile);
+
+
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Fisierul este gol");
+            return null;
+        } finally {
+
             try {
-                ServerSocket serverSocket = new ServerSocket(8080);
-                getProfile().setOnline(true);
-                saveProfile(getProfile());
+                objectInputStream.close();
+                fileInputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
+        //Verifica daca profile exista
+// Doar citim din fisier, rezultatul o sa fie un obiect
+        //Profile profile
+
+
         return null;
-    // TODO Ia un fisier, cu ce nume vrei (ex: profile.txt). Apeleaza o metoda pentru a il crea daca nu exista
-    // TODO Returneaza null daca fisierul este gol (sau arunca expectie)
-    // TODO Citeste Profile din fisier folosind ****InputStream si ******InputStream.
-    // TODO Daca nu esti online, conecteaza-te la server, seteaza profilul ca online si salveaza-l in fisier
-    // TODO Inchide stream-urile
-    // TODO orice eroare primesti, intoarce null (sau arunca expectie)
+        // TODO Ia un fisier, cu ce nume vrei (ex: profile.txt). Apeleaza o metoda pentru a il crea daca nu exista
+        // TODO Returneaza null daca fisierul este gol (sau arunca expectie)
+        // TODO Citeste Profile din fisier folosind ****InputStream si ******InputStream.
+        // TODO Daca nu esti online, conecteaza-te la server, seteaza profilul ca online si salveaza-l in fisier
+        // TODO Inchide stream-urile
+        // TODO orice eroare primesti, intoarce null (sau arunca expectie)
 
     }
 
