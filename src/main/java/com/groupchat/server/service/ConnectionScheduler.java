@@ -24,11 +24,13 @@ public class ConnectionScheduler {
     //TODO Aplica o anotare pe aceasta metoda pentru a fi chemata la fiecare 5 minute
     @Scheduled(fixedRate = 300000) //5min = 300000ms
     public void checkForOffline() {
-        profileRepo.getProfile();
+
 //   //     if(System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(5)){
 //
 //        }
 
+     //   parentServerTemplate.disconnect();
+    //    profileRepo.saveProfile(profileRepo.getProfile());
         /*
          TODO Ia profilul.
           Daca profilul exista, a trecut mai mult de 1 minut de cand s-a trigeruit un event si profilul apare ca online
@@ -38,5 +40,6 @@ public class ConnectionScheduler {
 
     public void updateLastEvent() {
         //TODO Reseteaza lastEvent cu timpul de acum.
+        lastEvent.toLocalDate();
     }
 }

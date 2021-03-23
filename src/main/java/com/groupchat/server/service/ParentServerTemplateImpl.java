@@ -21,7 +21,8 @@ public class ParentServerTemplateImpl implements ParentServerTemplate {
 
     @Override
     public List<Profile> getProfiles() {
-        restTemplate.getForObject("/api/profile", String.class);
+
+         restTemplate.getForObject("/api/profile", String.class);
         //TODO Cheama endpoint-ul din serverul parinte pentru a luat toate profilele.
         return null;
     }

@@ -56,15 +56,16 @@ public class ProfileRepoImpl implements ProfileRepo {
                 fileInputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
+
             }
 
         }
+        return null;
         //Verifica daca profile exista
-// Doar citim din fisier, rezultatul o sa fie un obiect
+        // Doar citim din fisier, rezultatul o sa fie un obiect
         //Profile profile
 
 
-        return null;
         // TODO Ia un fisier, cu ce nume vrei (ex: profile.txt). Apeleaza o metoda pentru a il crea daca nu exista
         // TODO Returneaza null daca fisierul este gol (sau arunca expectie)
         // TODO Citeste Profile din fisier folosind ****InputStream si ******InputStream.
@@ -78,13 +79,44 @@ public class ProfileRepoImpl implements ProfileRepo {
     public void saveProfile(Profile profile) {
 
         File fisier = new File("profile.txt");
-        if (!fisier.exists()) {
+        if (fisier.exists()) {
             try {
                 fisier.createNewFile();
             } catch (IOException e) {
-                System.out.println("Fisierul este gol");
+                System.out.println("Fisierul nu exista");
             }
+
+
         }
+
+        FileOutputStream fileOutputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+
+        try {
+            fileOutputStream = new FileOutputStream(fisier);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(profile);
+            if (!profile.getOnline()) {
+                parentServerTemplate.connect(profile.getId());
+                profile.setOnline(true);
+                saveProfile(profile);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Fisierul este gol");
+        } catch (IOException e) {
+            System.out.println("Nu sunt profile");
+        } finally {
+            try {
+                objectOutputStream.close();
+                fileOutputStream.close();
+            } catch (IOException e) {
+                System.out.println("Nu s-a inchis");
+            }
+
+        }
+        //Adauga un profile doar daca este conectat/on
+        // Doar scriemj/adaugam in fisier, rezultatul fisierul o sa aiba un obiect
+
         // TODO Ia un fisier, cu ce nume vrei (ex: profile.txt). Apeleaza o metoda pentru a il crea daca nu exista
         // TODO Scrie Profile in fisier folosind ****OutputStream si ******OutputStream.
         // TODO Daca nu esti online, conecteaza-te la server, seteaza profilul ca online si salveaza-l in fisier
