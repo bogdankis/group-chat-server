@@ -38,14 +38,14 @@ public class ProfileRepoImpl implements ProfileRepo {
             fileInputStream = new FileInputStream(fisier);
             objectInputStream = new ObjectInputStream(fileInputStream);
             Profile profile = (Profile) objectInputStream.readObject();
-            if (!profile.getOnline()) {
+            if (profile != null && !profile.getOnline()) {
                 parentServerTemplate.connect(profile.getId());
                 profile.setOnline(true);
                 saveProfile(profile);
 
 
             }
-
+        return  profile;
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Fisierul este gol");
             return null;
@@ -54,13 +54,16 @@ public class ProfileRepoImpl implements ProfileRepo {
             try {
                 objectInputStream.close();
                 fileInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
 
+            }catch (NullPointerException nullPointerException){
+                System.out.println("Nu exista profil");
             }
 
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return null;
+
         //Verifica daca profile exista
         // Doar citim din fisier, rezultatul o sa fie un obiect
         //Profile profile
@@ -79,7 +82,7 @@ public class ProfileRepoImpl implements ProfileRepo {
     public void saveProfile(Profile profile) {
 
         File fisier = new File("profile.txt");
-        if (fisier.exists()) {
+        if (!fisier.exists()) {
             try {
                 fisier.createNewFile();
             } catch (IOException e) {
@@ -96,7 +99,7 @@ public class ProfileRepoImpl implements ProfileRepo {
             fileOutputStream = new FileOutputStream(fisier);
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(profile);
-            if (!profile.getOnline()) {
+            if (profile != null && !profile.getOnline()) {
                 parentServerTemplate.connect(profile.getId());
                 profile.setOnline(true);
                 saveProfile(profile);

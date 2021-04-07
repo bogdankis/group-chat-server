@@ -33,7 +33,7 @@ public class ChatServiceImpl implements ChatService {
         //TODO Adauga obiectului createMessageRequest senderId-ul (id-ul profilului tau)
         //TODO trimite request la server-ul parinte cu mesajul.;
         connectionScheduler.updateLastEvent();
-        createMessageRequest.setSenderId(String.valueOf(profileRepo.getProfile()));
+        createMessageRequest.setSenderId(profileRepo.getProfile().getId());
         return parentServerTemplate.sendMessage(createMessageRequest);
 
 

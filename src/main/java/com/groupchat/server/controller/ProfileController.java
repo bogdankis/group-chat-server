@@ -4,6 +4,7 @@ package com.groupchat.server.controller;
 import com.groupchat.server.dto.CreateProfileRequest;
 import com.groupchat.server.model.Profile;
 import com.groupchat.server.service.ProfileService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,8 @@ public class ProfileController {
     ProfileService profileService;
 
     // TODO Mapeaza metoda la POST, cu path-ul /
-    @PostMapping("/api/profile")
-    public ResponseEntity<?> createProfile(@RequestBody CreateProfileRequest createProfileRequest) {
+    @PostMapping()
+    public ResponseEntity<?> createProfile(@RequestBody CreateProfileRequest createProfileRequest) throws NotFoundException {
         //TODO
         return ResponseEntity.ok(profileService.createProfile(createProfileRequest));
 
@@ -32,8 +33,8 @@ public class ProfileController {
     }
 
     // TODO Mapeaza metoda la GET, cu path-ul /
-    @GetMapping("/api/profile")
-    public ResponseEntity<?> getProfile() {
+    @GetMapping()
+    public ResponseEntity<?> getProfile() throws NotFoundException {
         //TODO
         //TODO Daca profilul este null, intoarce ca si status NotFound.
         if (profileService.getProfile() == null) {

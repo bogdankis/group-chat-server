@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 // TODO Mapeaza controller-ul la /api/chat
+@RequestMapping("/api/chat")
 public class ChatController {
 
     @Autowired
     ChatService chatService;
 
     // TODO Mapeaza metoda la POST, cu path-ul /
-    @PostMapping("/api/chat/")
+    @PostMapping()
     public ResponseEntity<?> sendMessage(@RequestBody CreateMessageRequest createMessageRequest) {
         //TODO
         try {
@@ -30,7 +31,7 @@ public class ChatController {
 
 
     // TODO Mapeaza metoda la GET, cu path-ul /
-    @GetMapping("/api/chat/")
+    @GetMapping()
     public ResponseEntity<?> getMessages() {
         //TODO
         return ResponseEntity.ok(chatService.getMessages());
