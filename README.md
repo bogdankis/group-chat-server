@@ -3,8 +3,8 @@ Server facut cu Java Spring Boot avand urmatoarele librarii: Spring Boot DevTool
 Springfox-swagger2,springfox-swagger-ui,
 
 ***How does it work***
-<p> 1. Enter profile name</p>
-<p> 2. Start to chatting with friends </p>
+<p> 1. Introduceti numele de utilizator</p>
+<p> 2. Porniti chat-ul</p>
 
 <p><b>Demo:</b></p>
 
