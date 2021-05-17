@@ -7,6 +7,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -22,28 +23,20 @@ public class ProfileServiceImpl implements ProfileService {
     ConnectionScheduler connectionScheduler;
 
     public Profile createProfile(@RequestBody CreateProfileRequest createProfileRequest) throws NotFoundException {
-        //TODO Anunta connectionScheduler de event.
-        //TODO Creaza un profil in serverul parinte
-        //TODO Salveaza profilul primit in fisierul tau
-        connectionScheduler.updateLastEvent();
-        Profile profile = parentServerTemplate.createProfile(createProfileRequest);
-        profileRepo.saveProfile(profile);
+        connectionScheduler.updateLastEvent();                                                  //TODO Anunta connectionScheduler de event.
+        Profile profile = parentServerTemplate.createProfile(createProfileRequest);             //TODO Creaza un profil in serverul parinte
+        profileRepo.saveProfile(profile);                                                       //TODO Salveaza profilul primit in fisierul tau
         return profile;
     }
 
     public List<Profile> getProfiles() {
-
-        //TODO Anunta connectionScheduler de event.
-        //TODO Ia toate profilele din serverul parinte.
-        connectionScheduler.updateLastEvent();
-        return parentServerTemplate.getProfiles();
+        connectionScheduler.updateLastEvent();                      //TODO Anunta connectionScheduler de event.
+        return parentServerTemplate.getProfiles();                  //TODO Ia toate profilele din serverul parinte.
     }
 
-    public Profile getProfile() throws NotFoundException {
-        //TODO Anunta connectionScheduler de event.
-        //TODO Ia-ti profilul din fisier.
-        connectionScheduler.updateLastEvent();
-        return profileRepo.getProfile();
+    public Profile getProfile() throws HttpClientErrorException.NotFound {
+        connectionScheduler.updateLastEvent();          //TODO Anunta connectionScheduler de event.
+        return profileRepo.getProfile();                //TODO Ia-ti profilul din fisier.
 
     }
 

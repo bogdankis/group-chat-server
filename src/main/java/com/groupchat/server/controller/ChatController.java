@@ -16,25 +16,20 @@ public class ChatController {
     @Autowired
     ChatService chatService;
 
-    // TODO Mapeaza metoda la POST, cu path-ul /
     @PostMapping()
     public ResponseEntity<?> sendMessage(@RequestBody CreateMessageRequest createMessageRequest) {
-        //TODO
         try {
-            return ResponseEntity.ok(chatService.sendMessage(createMessageRequest));
+            return ResponseEntity.ok(chatService.sendMessage(createMessageRequest));  //TODO trimite mesaj
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mesaj necreat");
         }
     }
 
-
-    // TODO Mapeaza metoda la GET, cu path-ul /
     @GetMapping()
     public ResponseEntity<?> getMessages() {
-        //TODO
-        return ResponseEntity.ok(chatService.getMessages());
+        return ResponseEntity.ok(chatService.getMessages());  //TODO intoarce toate mesajele
     }
 
 }

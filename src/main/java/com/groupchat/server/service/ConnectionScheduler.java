@@ -22,28 +22,21 @@ public class ConnectionScheduler {
 
     private LocalDateTime lastEvent = LocalDateTime.now();
 
-    //TODO Aplica o anotare pe aceasta metoda pentru a fi chemata la fiecare 5 minute
-    @Scheduled(fixedRate = 300000) //5min = 300000ms
+    //TODO Se aplica anotarea @Scheduled pe aceasta metoda pentru a fi chemata la fiecare 5 minute
+    @Scheduled(fixedRate = 300000) //TODO 5min = 300000ms
     public void checkForOffline() {
-        Profile profile = profileRepo.getProfile();
+        Profile profile = profileRepo.getProfile();                                                 //TODO Ia profilul.
         if (profile != null) {
-            if (lastEvent.isAfter(LocalDateTime.now().plus(1, ChronoUnit.MINUTES))) {
+            if (lastEvent.isAfter(LocalDateTime.now().plus(1, ChronoUnit.MINUTES))) {  //TODO Daca profilul exista, a trecut mai mult de 1 minut de cand s-a trigeruit un event si profilul apare ca online
                 updateLastEvent();
-                parentServerTemplate.disconnect(profile.getId());
-                profile.setOnline(false);
-                profileRepo.saveProfile(profile);
+                parentServerTemplate.disconnect(profile.getId());                                  //TODO anunta serverul parinte folosind disconnect
+                profile.setOnline(false);                                                          //TODO seteeaza profilul ca offline
+                profileRepo.saveProfile(profile);                                                  //TODO se salveaza in fisier
             }
         }
     }
 
-        /*
-         TODO Ia profilul.
-          Daca profilul exista, a trecut mai mult de 1 minut de cand s-a trigeruit un event si profilul apare ca online
-          anunta serverul parinte folosind disconnect, seteeaza profilul ca offline, si salveaza-l in fisier
-         */
-
     public void updateLastEvent() {
-        //TODO Reseteaza lastEvent cu timpul de acum.
-        lastEvent = LocalDateTime.now();
+        lastEvent = LocalDateTime.now();           //TODO Se reseteaza lastEvent cu timpul de acum.
     }
 }

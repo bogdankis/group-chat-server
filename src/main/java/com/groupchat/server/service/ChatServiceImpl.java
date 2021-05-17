@@ -29,20 +29,13 @@ public class ChatServiceImpl implements ChatService {
     ParentServerTemplate parentServerTemplate;
 
     public List<MessageResponse> sendMessage(@RequestBody CreateMessageRequest createMessageRequest) throws NotFoundException {
-        //TODO Anunta connectionScheduler de event.
-        //TODO Adauga obiectului createMessageRequest senderId-ul (id-ul profilului tau)
-        //TODO trimite request la server-ul parinte cu mesajul.;
-        connectionScheduler.updateLastEvent();
-        createMessageRequest.setSenderId(profileRepo.getProfile().getId());
-        return parentServerTemplate.sendMessage(createMessageRequest);
-
-
+        connectionScheduler.updateLastEvent();                                       //TODO Anunta connectionScheduler de event.
+        createMessageRequest.setSenderId(profileRepo.getProfile().getId());         //TODO Adauga obiectului createMessageRequest senderId-ul (id-ul profilului meu)
+        return parentServerTemplate.sendMessage(createMessageRequest);             //TODO trimite request la server-ul parinte cu mesajul.;
     }
 
     public List<MessageResponse> getMessages() {
-        //TODO Anunta connectionScheduler de event.
-        //TODO Ia mesajele de la server-ul parinte
-        connectionScheduler.updateLastEvent();
-        return parentServerTemplate.getMessages();
+        connectionScheduler.updateLastEvent();          //TODO Anunta connectionScheduler de event.
+        return parentServerTemplate.getMessages();     //TODO Ia mesajele de la server-ul parinte
     }
 }

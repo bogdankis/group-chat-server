@@ -8,6 +8,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
 @RequestMapping("/api/profile")
@@ -16,31 +17,34 @@ public class ProfileController {
     @Autowired
     ProfileService profileService;
 
-    // TODO Mapeaza metoda la POST, cu path-ul /
     @PostMapping()
-    public ResponseEntity<?> createProfile(@RequestBody CreateProfileRequest createProfileRequest) throws NotFoundException {
-        //TODO
+    public ResponseEntity<?> createProfile(@RequestBody CreateProfileRequest createProfileRequest) throws NotFoundException { //TODO creaza profil
         return ResponseEntity.ok(profileService.createProfile(createProfileRequest));
+
 
     }
 
     // TODO Mapeaza metoda la GET, cu path-ul /all
     @GetMapping("/all")
     public ResponseEntity<?> getProfiles() {
-        //TODO
-        return ResponseEntity.ok(profileService.getProfiles());
+        return ResponseEntity.ok(profileService.getProfiles()); //TODO aduce toate profilele
 
     }
 
-    // TODO Mapeaza metoda la GET, cu path-ul /
     @GetMapping()
-    public ResponseEntity<?> getProfile() throws NotFoundException {
-        //TODO
+    public ResponseEntity<?> getProfile() throws HttpClientErrorException {
         //TODO Daca profilul este null, intoarce ca si status NotFound.
-        if (profileService.getProfile() == null) {
-            return ResponseEntity.notFound().build();
-        } else {
+//        if (profileService.getProfile() == null) {
+//            return ResponseEntity.notFound().build();
+//        } else {
+//            return ResponseEntity.ok(profileService.getProfile());
+//        }
+        try {
             return ResponseEntity.ok(profileService.getProfile());
+
+        } catch (HttpClientErrorException.NotFound | NotFoundException notFound) {
+            return ResponseEntity.status(404).body("Profile Not Found");
+
         }
     }
 }
